@@ -1,5 +1,6 @@
-/*
-
+/**
+ * Upgraded version of the standard Arduino Servo library with the addition of speed control
+ *
  */
 
 #if defined(ARDUINO_ARCH_AVR)
@@ -49,9 +50,9 @@ static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t
   {
     *OCRnA = *TCNTn + SERVO(timer,Channel[timer]).ticks;
     if(SERVO(timer,Channel[timer]).Pin.isActive == true)     // check if activated
-      digitalWrite( SERVO(timer,Channel[timer]).Pin.nbr,HIGH); // its an active channel so pulse it high
+      riadigitalWrite( SERVO(timer,Channel[timer]).Pin.nbr,HIGH); // its an active channel so pulse it high
   }
-  else 
+  else
   {
     // finished all channels so wait for the refresh period to expire before starting over
     if( ((unsigned)*TCNTn) + 4 < usToTicks(REFRESH_INTERVAL) )  // allow a few ticks to ensure the next OCR1A not missed
